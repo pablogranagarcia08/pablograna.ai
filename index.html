@@ -284,6 +284,32 @@
 
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
+    /* Tarjeta de fundador (foto en el hero) */
+    .hero-by {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 1.9rem;
+    }
+    .hero-by-img {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 1px solid rgba(94,255,196,.35);
+      background: var(--surf);
+      flex-shrink: 0;
+    }
+    .hero-by-name {
+      font-family: var(--fd);
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--txt);
+      line-height: 1.2;
+      letter-spacing: -.01em;
+    }
+    .hero-by-role { font-size: .78rem; color: var(--muted); }
+
     /* ── Chat widget (hero right) ── */
     .hero-r { display: flex; justify-content: flex-end; }
 
@@ -369,6 +395,7 @@
       .hero-l { max-width: 100%; margin: 0 auto; }
       .hero-p { margin: 0 auto 2rem; }
       .hero-btns { justify-content: center; }
+      .hero-by { justify-content: center; text-align: left; }
       .hero-r { display: none; }
     }
 
@@ -878,6 +905,14 @@
         <div class="hero-btns">
           <a href="#servicios" class="btn-mint">Ver qué hago →</a>
           <a href="https://wa.me/34664581256" class="btn-ghost" target="_blank" rel="noopener">💬 Escríbeme</a>
+        </div>
+        <div class="hero-by">
+          <img src="foto.jpg" alt="Pablo Grana" class="hero-by-img"
+               onerror="this.style.display='none'">
+          <div>
+            <div class="hero-by-name">Pablo Grana</div>
+            <div class="hero-by-role">Desarrollador de IA · Oviedo</div>
+          </div>
         </div>
       </div>
 
