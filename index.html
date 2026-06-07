@@ -1157,10 +1157,12 @@
 (function(){
   var WA  = 'https://wa.me/34664581256?text=Hola%20Pablo%2C%20vengo%20del%20chat%20de%20tu%20web%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n';
   var CAL = 'https://calendly.com/pablogranagarcia08';
+  var API = '/api/chat';   // backend seguro (Vercel). Si no existe, usa respuestas locales.
   var box = document.getElementById('cb-msgs');
   var inp = document.getElementById('cb-inp');
   var started = false;
   var fbIdx   = 0;
+  var history = [];        // memoria de la conversación para la IA
 
   var INTENTS = [
     {
@@ -1297,19 +1299,42 @@
     return w;
   }
 
+  // Respaldo local (respuestas predefinidas) si la IA no está disponible.
+  function localReply(txt){
+    var intent=findIntent(txt);
+    if(intent){
+      addMsg(intent.r,'bot',intent.c);
+    } else {
+      addMsg(FALLBACK[fbIdx%FALLBACK.length],'bot',['Hablar por WhatsApp','Reservar llamada gratis']);
+      fbIdx++;
+    }
+  }
+
   function respond(txt){
     var tw=showTyping();
-    var delay=850+Math.random()*550;
-    setTimeout(function(){
+    history.push({role:'user',content:txt});
+    fetch(API,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:history})
+    })
+    .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
+    .then(function(d){
       tw.remove();
-      var intent=findIntent(txt);
-      if(intent){
-        addMsg(intent.r,'bot',intent.c);
+      if(d && d.reply){
+        history.push({role:'assistant',content:d.reply});
+        addMsg(d.reply,'bot',['Hablar por WhatsApp','Reservar llamada gratis']);
       } else {
-        addMsg(FALLBACK[fbIdx%FALLBACK.length],'bot',['Hablar por WhatsApp','Reservar llamada gratis']);
-        fbIdx++;
+        history.pop();
+        localReply(txt);
       }
-    },delay);
+    })
+    .catch(function(){
+      // Sin backend (p. ej. en GitHub Pages) o error de red → respuestas locales.
+      tw.remove();
+      history.pop();
+      localReply(txt);
+    });
   }
 
   function onChip(c){
