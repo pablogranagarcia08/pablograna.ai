@@ -72,7 +72,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600&family=Fira+Code:wght@400;500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ═══════════════════════════════════════════
@@ -616,6 +616,107 @@
     @media(max-width:540px){ .cta-box{padding:2.5rem 1.4rem;} }
 
     /* ═══════════════════════════════════════════
+       CONTACTO · FORMULARIO + NOTA PERSONAL
+    ═══════════════════════════════════════════ */
+    .contact-g {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 2.5rem;
+      align-items: start;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .contact-note {
+      font-size: .98rem;
+      color: var(--txt);
+      line-height: 1.78;
+      margin-bottom: 1.4rem;
+    }
+    .contact-note .hl { color: var(--mint); }
+    .signature {
+      font-family: 'Caveat', cursive;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: .9;
+      color: var(--mint);
+      margin-bottom: .4rem;
+    }
+    .sign-sub {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+    }
+    .contact-quick { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .form-card {
+      background: var(--bg);
+      border: 1px solid var(--bord);
+      border-radius: 20px;
+      padding: 2rem 1.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--mint), var(--violet));
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .fld { margin-bottom: 1rem; }
+    .fld label {
+      display: block;
+      font-family: var(--fm);
+      font-size: .72rem;
+      color: var(--muted);
+      margin-bottom: .4rem;
+    }
+    .fld input,
+    .fld select,
+    .fld textarea {
+      width: 100%;
+      background: var(--surf);
+      border: 1px solid var(--bord);
+      border-radius: 10px;
+      padding: 11px 13px;
+      color: var(--txt);
+      font-family: var(--fb);
+      font-size: .88rem;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .fld input::placeholder,
+    .fld textarea::placeholder { color: rgba(158,147,137,.6); }
+    .fld input:focus,
+    .fld select:focus,
+    .fld textarea:focus {
+      border-color: rgba(94,255,196,.4);
+      background: rgba(94,255,196,.04);
+    }
+    .fld select { cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%239E9389' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 13px center; padding-right: 34px; }
+    .fld select option { background: var(--bg2); color: var(--txt); }
+    .fld textarea { resize: vertical; min-height: 80px; line-height: 1.55; }
+    .form-card .btn-mint { width: 100%; justify-content: center; margin-top: .3rem; }
+    .form-hint {
+      font-family: var(--fm);
+      font-size: .66rem;
+      color: rgba(158,147,137,.7);
+      text-align: center;
+      margin-top: .8rem;
+      line-height: 1.5;
+    }
+    @media(max-width:820px){
+      .contact-g { grid-template-columns: 1fr; gap: 2rem; max-width: 480px; }
+      .contact-quick { justify-content: flex-start; }
+    }
+    @media(max-width:420px){
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+    }
+
+    /* ═══════════════════════════════════════════
        FOOTER
     ═══════════════════════════════════════════ */
     footer {
@@ -1039,20 +1140,95 @@
   </div>
 </section>
 
-<!-- ══ CTA FINAL ══════════════════════════════ -->
+<!-- ══ CONTACTO · FORMULARIO ══════════════════ -->
 <section id="contacto">
   <div class="wrap">
-    <div class="cta-box rv">
+    <div class="sec-hd rv" style="margin-bottom:2.6rem">
       <div class="tag" style="justify-content:center"><span class="tdot"></span> Empieza hoy</div>
-      <h2 class="cta-h2">¿Hablamos de tu negocio?</h2>
-      <p class="cta-p">La primera consulta es gratis y sin compromiso. En 30 minutos te digo exactamente qué puedo hacer por ti y cuánto cuesta. Sin presión y sin rodeos.</p>
-      <div class="cta-btns">
-        <a href="https://wa.me/34664581256?text=Hola%20Pablo%2C%20quiero%20la%20consulta%20gratuita" class="btn-mint" target="_blank" rel="noopener">💬 Hablar por WhatsApp</a>
-        <a href="https://calendly.com/pablogranagarcia08" class="btn-ghost" target="_blank" rel="noopener">📅 Reservar llamada</a>
+      <h2 class="sec-h2">¿Hablamos de tu negocio?</h2>
+      <p class="sec-p">Rellena esto en 20 segundos. Lo leo yo mismo y te respondo en menos de 24 horas. Gratis y sin compromiso.</p>
+    </div>
+
+    <div class="contact-g">
+
+      <!-- Lado personal -->
+      <div class="contact-l rv">
+        <p class="contact-note">No soy una agencia con mil clientes: soy <span class="hl">yo, Pablo</span>, y trabajo con pocos negocios a la vez para hacerlo bien. Cuéntame qué te quita el sueño y te digo con sinceridad si puedo ayudarte. Y si veo que no es para ti, también te lo diré.</p>
+        <div class="signature">Pablo</div>
+        <p class="sign-sub">— Pablo Grana · Oviedo, normalmente con un café al lado ☕</p>
+
+        <div class="contact-quick">
+          <a href="https://wa.me/34664581256?text=Hola%20Pablo%2C%20quiero%20la%20consulta%20gratuita" class="btn-ghost" target="_blank" rel="noopener">💬 Prefiero WhatsApp directo</a>
+          <a href="https://calendly.com/pablogranagarcia08" class="btn-ghost" target="_blank" rel="noopener">📅 Reservar llamada</a>
+        </div>
+
+        <div class="about-facts" style="margin-top:1.5rem">
+          <span class="about-fact">⏱️ Respondo en &lt;24h</span>
+          <span class="about-fact">🎁 Primera consulta gratis</span>
+          <span class="about-fact">🤝 Sin compromiso</span>
+        </div>
       </div>
+
+      <!-- Formulario -->
+      <form class="form-card rv" id="lead-form" onsubmit="return enviarLead(event)">
+        <div class="form-row">
+          <div class="fld">
+            <label for="lf-nombre">Tu nombre *</label>
+            <input id="lf-nombre" name="nombre" type="text" required placeholder="Ej: María López">
+          </div>
+          <div class="fld">
+            <label for="lf-contacto">Email o teléfono</label>
+            <input id="lf-contacto" name="contacto" type="text" placeholder="Para responderte">
+          </div>
+        </div>
+        <div class="fld">
+          <label for="lf-negocio">¿A qué se dedica tu negocio?</label>
+          <input id="lf-negocio" name="negocio" type="text" placeholder="Ej: clínica dental, tienda online…">
+        </div>
+        <div class="fld">
+          <label for="lf-servicio">¿Qué te interesa?</label>
+          <select id="lf-servicio" name="servicio">
+            <option>Aún no lo tengo claro</option>
+            <option>Chatbot con IA (atención 24/7)</option>
+            <option>Automatizaciones</option>
+            <option>Web con IA integrada</option>
+            <option>Varias cosas / otra idea</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label for="lf-msg">Cuéntame un poco más</label>
+          <textarea id="lf-msg" name="mensaje" rows="3" placeholder="¿Qué te gustaría conseguir o resolver?"></textarea>
+        </div>
+        <button type="submit" class="btn-mint">Enviar y hablar con Pablo →</button>
+        <p class="form-hint">Al enviar se abre WhatsApp con tu mensaje ya escrito. Tú solo le das a enviar. 👌</p>
+      </form>
+
     </div>
   </div>
 </section>
+
+<!-- Formulario → WhatsApp -->
+<script>
+  window.enviarLead = function (e) {
+    e.preventDefault();
+    var f = e.target;
+    var nombre   = f.nombre.value.trim();
+    var contacto = f.contacto.value.trim();
+    var negocio  = f.negocio.value.trim();
+    var servicio = f.servicio.value;
+    var mensaje  = f.mensaje.value.trim();
+
+    var t = 'Hola Pablo 👋 Soy ' + (nombre || '(sin nombre)') + '.';
+    if (negocio)  t += '\nMi negocio: ' + negocio + '.';
+    t += '\nMe interesa: ' + servicio + '.';
+    if (mensaje)  t += '\n\n' + mensaje;
+    if (contacto) t += '\n\nMi contacto: ' + contacto;
+    t += '\n\n(Te escribo desde el formulario de tu web)';
+
+    window.open('https://wa.me/34664581256?text=' + encodeURIComponent(t), '_blank', 'noopener');
+    return false;
+  };
+</script>
 
 <!-- ══ FOOTER ══════════════════════════════════ -->
 <footer>
