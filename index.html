@@ -8,13 +8,67 @@
 
   <!--
   ╔══════════════════════════════════════════════════╗
-  ║  REEMPLAZA ESTOS TEXTOS EN EL CÓDIGO:            ║
-  ║  34664581256    → tu número WhatsApp               ║
-  ║                 (ej: 34612345678)                ║
-  ║  pablogranagarcia08  → tu usuario de Calendly           ║
-  ║  pablo-grana-garcia-89b812414  → tu perfil de LinkedIn            ║
+  ║  DATOS DE CONTACTO (búscalos para actualizarlos): ║
+  ║  WhatsApp → 34664581256                           ║
+  ║  Calendly → pablogranagarcia08                    ║
+  ║  LinkedIn → pablo-grana-garcia-89b812414          ║
+  ║  Dominio  → pablograna.ai                         ║
   ╚══════════════════════════════════════════════════╝
   -->
+
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Pablo Grana">
+  <meta name="theme-color" content="#08090f">
+  <link rel="canonical" href="https://pablograna.ai/">
+
+  <!-- Favicon (SVG en línea: punto menta sobre fondo oscuro) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2308090f'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='15' font-weight='700' fill='%235EFFC4' text-anchor='middle'%3EPG%3C/text%3E%3C/svg%3E">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="PABLOGRANA.AI">
+  <meta property="og:title" content="PABLOGRANA.AI · Agentes de IA para Negocios">
+  <meta property="og:description" content="Chatbots 24/7, automatizaciones y páginas web con IA que trabajan mientras tú duermes. Primera consulta gratuita.">
+  <meta property="og:url" content="https://pablograna.ai/">
+  <!-- TODO: sube una imagen 1200×630 a la raíz como og.png para las vistas previas -->
+  <meta property="og:image" content="https://pablograna.ai/og.png">
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@pablograna_ai">
+  <meta name="twitter:title" content="PABLOGRANA.AI · Agentes de IA para Negocios">
+  <meta name="twitter:description" content="Chatbots 24/7, automatizaciones y páginas web con IA. Primera consulta gratuita.">
+  <meta name="twitter:image" content="https://pablograna.ai/og.png">
+
+  <!-- Datos estructurados (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "PABLOGRANA.AI",
+    "description": "Agentes de IA para negocios: chatbots, automatizaciones y páginas web con inteligencia artificial.",
+    "url": "https://pablograna.ai/",
+    "areaServed": "ES",
+    "priceRange": "€€",
+    "founder": {
+      "@type": "Person",
+      "name": "Pablo Grana",
+      "jobTitle": "Desarrollador de IA",
+      "sameAs": [
+        "https://instagram.com/pablograna.ai",
+        "https://linkedin.com/in/pablo-grana-garcia-89b812414",
+        "https://x.com/pablograna_ai"
+      ]
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "ventas",
+      "url": "https://wa.me/34664581256",
+      "availableLanguage": "Spanish"
+    }
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +89,7 @@
       --mint:    #5EFFC4;
       --violet:  #8B7EFA;
       --txt:     #F0F2FF;
-      --muted:   #6B7280;
+      --muted:   #828B9C;
       --r:       14px;
       --fd:      'Syne', sans-serif;
       --fb:      'Outfit', sans-serif;
@@ -593,6 +647,19 @@
       transition: opacity .6s ease, transform .6s ease;
     }
     .rv.in { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════════════════
+       MOTION REDUCIDO (accesibilidad)
+    ═══════════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+      .rv { opacity: 1 !important; transform: none !important; }
+    }
   </style>
 </head>
 <body>
