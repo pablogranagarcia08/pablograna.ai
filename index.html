@@ -82,14 +82,14 @@
     html { font-size: 16px; scroll-behavior: smooth; }
 
     :root {
-      --bg:      #08090f;
-      --bg2:     #0d0e1a;
+      --bg:      #0e0c10;
+      --bg2:     #161118;
       --surf:    rgba(255,255,255,0.04);
-      --bord:    rgba(255,255,255,0.07);
+      --bord:    rgba(255,255,255,0.08);
       --mint:    #5EFFC4;
-      --violet:  #8B7EFA;
-      --txt:     #F0F2FF;
-      --muted:   #828B9C;
+      --violet:  #FF9E7A;  /* acento cálido (coral) */
+      --txt:     #F5F1EC;
+      --muted:   #9E9389;
       --r:       14px;
       --fd:      'Syne', sans-serif;
       --fb:      'Outfit', sans-serif;
@@ -130,6 +130,7 @@
       border: none;
       cursor: pointer;
       transition: opacity .2s, transform .15s;
+      white-space: nowrap;
     }
     .btn-mint:hover { opacity: .88; transform: translateY(-2px); }
 
@@ -147,6 +148,7 @@
       font-family: var(--fb);
       cursor: pointer;
       transition: border-color .2s, background .2s, transform .15s;
+      white-space: nowrap;
     }
     .btn-ghost:hover {
       border-color: rgba(94,255,196,.3);
@@ -242,7 +244,7 @@
       position: absolute;
       width: 600px; height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(94,255,196,.09) 0%, rgba(139,126,250,.05) 50%, transparent 72%);
+      background: radial-gradient(circle, rgba(94,255,196,.09) 0%, rgba(255,158,122,.05) 50%, transparent 72%);
       pointer-events: none;
       transform: translate(-50%,-50%);
       transition: left .6s ease, top .6s ease;
@@ -335,7 +337,7 @@
       line-height: 1.5;
     }
     .cm.bot  .cb { background: rgba(94,255,196,.1); border: 1px solid rgba(94,255,196,.15); color: var(--txt); border-bottom-left-radius: 3px; }
-    .cm.user .cb { background: var(--violet); color: #fff; border-bottom-right-radius: 3px; }
+    .cm.user .cb { background: var(--violet); color: #1a0f0a; font-weight: 500; border-bottom-right-radius: 3px; }
 
     .ctyp {
       display: flex; gap: 4px;
@@ -660,6 +662,85 @@
       }
       .rv { opacity: 1 !important; transform: none !important; }
     }
+
+    /* ═══════════════════════════════════════════
+       SOBRE MÍ
+    ═══════════════════════════════════════════ */
+    .about-g {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 3rem;
+      align-items: center;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .about-photo {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--bord);
+      background: var(--surf);
+    }
+    .about-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-fallback {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--fd);
+      font-size: 5rem; font-weight: 800;
+      letter-spacing: -.04em;
+      color: var(--mint);
+      background: radial-gradient(circle at 35% 30%, rgba(94,255,196,.14), transparent 60%),
+                  radial-gradient(circle at 70% 80%, rgba(255,158,122,.14), transparent 60%),
+                  #131016;
+    }
+    .about-badge {
+      position: absolute;
+      left: 14px; bottom: 14px;
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--fm);
+      font-size: .68rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: rgba(8,9,15,.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(94,255,196,.25);
+      color: var(--mint);
+    }
+    .about-txt { max-width: 480px; }
+    .about-p {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+    .about-facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1.4rem;
+    }
+    .about-fact {
+      font-size: .78rem;
+      color: var(--txt);
+      padding: 6px 13px;
+      border-radius: 10px;
+      background: var(--surf);
+      border: 1px solid var(--bord);
+    }
+    @media(max-width:760px){
+      .about-g { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+      .about-photo { max-width: 260px; margin: 0 auto; }
+      .about-txt { max-width: 100%; }
+      .about-facts { justify-content: center; }
+      .about-g .hero-btns { justify-content: center; }
+      .about-g .tag { display: inline-flex; }
+    }
   </style>
 </head>
 <body>
@@ -671,6 +752,7 @@
       <a href="#" class="nav-logo">PABLOGRANA<span>.AI</span></a>
       <ul class="nav-links">
         <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
         <li><a href="#proceso">Proceso</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
@@ -687,14 +769,14 @@
     <div class="hero-in">
 
       <div class="hero-l">
-        <div class="tag"><span class="tdot"></span> Disponible para nuevos proyectos</div>
+        <div class="tag"><span class="tdot"></span> 👋 Hola, soy Pablo Grana</div>
         <h1 class="hero-h1">
-          Agentes de IA<br>para tu <span class="m">negocio</span>
+          Pongo la IA a<br>trabajar por tu <span class="m">negocio</span>
         </h1>
-        <p class="hero-p">Chatbots, automatizaciones y páginas web con inteligencia artificial que trabajan mientras tú duermes. Sin tecnicismos, sin complicaciones.</p>
+        <p class="hero-p">Construyo chatbots, automatizaciones y webs con IA que atienden a tus clientes mientras tú haces lo importante. Te lo explico sin tecnicismos y me encargo de todo.</p>
         <div class="hero-btns">
-          <a href="#servicios" class="btn-mint">Ver servicios →</a>
-          <a href="https://wa.me/34664581256" class="btn-ghost" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a href="#servicios" class="btn-mint">Ver qué hago →</a>
+          <a href="https://wa.me/34664581256" class="btn-ghost" target="_blank" rel="noopener">💬 Escríbeme</a>
         </div>
       </div>
 
@@ -750,8 +832,8 @@
   <div class="wrap">
     <div class="sec-hd rv">
       <div class="tag"><span class="tdot"></span> Lo que construyo</div>
-      <h2 class="sec-h2">IA aplicada a tu negocio real</h2>
-      <p class="sec-p">Soluciones concretas con resultados en semanas, no meses. Sin tecnicismos, sin sorpresas en el precio.</p>
+      <h2 class="sec-h2">Esto es lo que puedo hacer por ti</h2>
+      <p class="sec-p">Soluciones concretas, con resultados en semanas y no en meses. Te lo dejo todo funcionando, sin tecnicismos y sin sorpresas en el precio.</p>
     </div>
     <div class="svc-g">
 
@@ -789,6 +871,40 @@
           <li>Optimizada para aparecer en Google</li>
           <li>Formularios y captación automática</li>
         </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOBRE MÍ ═══════════════════════════════ -->
+<section id="sobre-mi">
+  <div class="wrap">
+    <div class="about-g">
+
+      <div class="about-photo rv">
+        <!-- Sustituye foto.jpg por tu foto real (cuadrada, ~600x600px) en la raíz del repo.
+             Si no existe, se muestran tus iniciales automáticamente. -->
+        <img src="foto.jpg" alt="Pablo Grana"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="about-fallback" aria-hidden="true">PG</div>
+        <span class="about-badge"><span class="tdot"></span> Disponible</span>
+      </div>
+
+      <div class="about-txt rv">
+        <div class="tag"><span class="tdot"></span> Sobre mí</div>
+        <h2 class="sec-h2">Hola, soy Pablo 👋</h2>
+        <p class="about-p">No vengo a venderte humo ni a llenarte de tecnicismos. Me dedico a una sola cosa: que la inteligencia artificial te ahorre tiempo y te traiga más clientes.</p>
+        <p class="about-p">Trabajo contigo de tú a tú, en remoto y con trato directo. Tú me cuentas qué te quita el sueño de tu negocio y yo me encargo de construir la solución, explicártela en cristiano y acompañarte después. Sin desaparecer cuando entrego.</p>
+        <div class="about-facts">
+          <span class="about-fact">📍 Oviedo</span>
+          <span class="about-fact">🌍 100% en remoto</span>
+          <span class="about-fact">⏱️ Respondo en menos de 24h</span>
+        </div>
+        <div class="hero-btns" style="margin-top:1.6rem">
+          <a href="https://wa.me/34664581256?text=Hola%20Pablo%2C%20vengo%20de%20tu%20web" class="btn-mint" target="_blank" rel="noopener">💬 Hablemos</a>
+          <a href="https://linkedin.com/in/pablo-grana-garcia-89b812414" class="btn-ghost" target="_blank" rel="noopener">Ver mi LinkedIn →</a>
+        </div>
       </div>
 
     </div>
@@ -927,8 +1043,8 @@
   <div class="wrap">
     <div class="cta-box rv">
       <div class="tag" style="justify-content:center"><span class="tdot"></span> Empieza hoy</div>
-      <h2 class="cta-h2">¿Tu negocio listo para la IA?</h2>
-      <p class="cta-p">Primera consulta gratuita y sin compromiso. En 30 minutos te digo exactamente qué puedo hacer por tu negocio y cuánto cuesta.</p>
+      <h2 class="cta-h2">¿Hablamos de tu negocio?</h2>
+      <p class="cta-p">La primera consulta es gratis y sin compromiso. En 30 minutos te digo exactamente qué puedo hacer por ti y cuánto cuesta. Sin presión y sin rodeos.</p>
       <div class="cta-btns">
         <a href="https://wa.me/34664581256?text=Hola%20Pablo%2C%20quiero%20la%20consulta%20gratuita" class="btn-mint" target="_blank" rel="noopener">💬 Hablar por WhatsApp</a>
         <a href="https://calendly.com/pablogranagarcia08" class="btn-ghost" target="_blank" rel="noopener">📅 Reservar llamada</a>
@@ -1101,7 +1217,7 @@
 }
 .cb-av {
   width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg,#5EFFC4,#8B7EFA);
+  background: linear-gradient(135deg,#5EFFC4,#FF9E7A);
   display: flex; align-items: center; justify-content: center;
   font-size: 16px; flex-shrink: 0;
 }
@@ -1135,7 +1251,7 @@
   font-family: 'Outfit',sans-serif; font-size: .79rem; line-height: 1.55; white-space: pre-line;
 }
 .cbm.bot  .cbb { background: rgba(94,255,196,.1); border: 1px solid rgba(94,255,196,.14); color: #F0F2FF; border-bottom-left-radius: 3px; }
-.cbm.user .cbb { background: #8B7EFA; color: #fff; border-bottom-right-radius: 3px; }
+.cbm.user .cbb { background: #FF9E7A; color: #1a0f0a; font-weight: 500; border-bottom-right-radius: 3px; }
 
 .cb-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 3px; animation: cbin .3s ease .08s both; }
 .cb-chip {
@@ -1146,8 +1262,8 @@
   cursor: pointer; transition: background .15s; white-space: nowrap;
 }
 .cb-chip:hover { background: rgba(94,255,196,.14); }
-.cb-chip.lnk { border-color: rgba(139,126,250,.3); color: #8B7EFA; background: rgba(139,126,250,.07); }
-.cb-chip.lnk:hover { background: rgba(139,126,250,.15); }
+.cb-chip.lnk { border-color: rgba(255,158,122,.3); color: #FF9E7A; background: rgba(255,158,122,.07); }
+.cb-chip.lnk:hover { background: rgba(255,158,122,.15); }
 
 .cb-typ {
   display: flex; gap: 4px;
