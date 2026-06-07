@@ -1157,12 +1157,10 @@
 (function(){
   var WA  = 'https://wa.me/34664581256?text=Hola%20Pablo%2C%20vengo%20del%20chat%20de%20tu%20web%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n';
   var CAL = 'https://calendly.com/pablogranagarcia08';
-  var API = '/api/chat';   // backend seguro (Vercel). Si no existe, usa respuestas locales.
   var box = document.getElementById('cb-msgs');
   var inp = document.getElementById('cb-inp');
   var started = false;
   var fbIdx   = 0;
-  var history = [];        // memoria de la conversación para la IA
 
   var INTENTS = [
     {
@@ -1236,31 +1234,71 @@
       c:['¿Cuánto cuesta?','Reservar llamada gratis']
     },
     {
-      k:['gracias','perfecto','genial','ok','bien','vale','entendido','de acuerdo'],
+      k:['gracias','perfecto','genial','ok','okay','bien','vale','entendido','de acuerdo','guay'],
       r:'¡Perfecto! 😊 Si tienes más preguntas, aquí estoy. Y si quieres dar el siguiente paso, Pablo está disponible para una llamada gratuita.',
       c:['Reservar llamada gratis','Hablar por WhatsApp']
+    },
+    {
+      k:['ejemplo','ejemplos','demo','demostracion','muestra','portfolio','portafolio','casos','caso de exito','trabajos','proyectos anteriores','ver algo'],
+      r:'Pablo puede enseñarte ejemplos reales de chatbots y automatizaciones adaptados a tu sector. 👀\n\nLa mejor forma de verlos es en la llamada gratuita: te muestra casos parecidos al tuyo y cómo funcionarían en tu negocio.',
+      c:['Reservar llamada gratis','Hablar por WhatsApp']
+    },
+    {
+      k:['pagar','pago','formas de pago','financiar','financiacion','plazos de pago','transferencia','factura','iva','metodo de pago'],
+      r:'El pago se acuerda al cerrar el proyecto, con presupuesto fijado de antemano. 💳\n\nPablo te explica las condiciones (y las opciones de pago) en la llamada gratuita, sin compromiso.',
+      c:['Reservar llamada gratis','Hablar por WhatsApp']
+    },
+    {
+      k:['distancia','remoto','online','presencial','donde estas','donde','ubicacion','pais','ciudad','espana','fuera','internacional','telematico'],
+      r:'Pablo trabaja 100% en remoto, así que puede ayudarte estés donde estés. 🌍\n\nTodo el proceso (llamada, propuesta, implementación y soporte) se hace online, de forma cómoda y sin desplazamientos.',
+      c:['Reservar llamada gratis','Hablar por WhatsApp']
+    },
+    {
+      k:['integrar','integracion','integraciones','conectar','crm','hoja de calculo','excel','sheets','shopify','wordpress','calendario','agenda','herramientas','api','zapier','make','notion'],
+      r:'Sí, las soluciones se integran con las herramientas que ya usas. 🔗\n\nWhatsApp, Instagram, tu web, calendarios, hojas de cálculo, CRMs, tiendas online... Pablo lo conecta para que todo trabaje junto y sin esfuerzo por tu parte.',
+      c:['¿Cuánto cuesta?','Reservar llamada gratis']
+    },
+    {
+      k:['garantia','seguro','funciona de verdad','y si no funciona','riesgo','confianza','opiniones','resenas','valoraciones'],
+      r:'Trabajamos con objetivos claros y un presupuesto cerrado desde el inicio, así que sabes exactamente qué vas a recibir. 🛡️\n\nAdemás, el soporte está incluido: si algo no funciona como esperabas, Pablo lo ajusta.',
+      c:['Reservar llamada gratis','Hablar por WhatsApp']
+    },
+    {
+      k:['adios','chao','hasta luego','nada mas','no me interesa','luego te escribo','ahora no','me lo pienso','dejalo'],
+      r:'¡Sin problema! 👋 Cuando quieras retomarlo, aquí estaré. Y si te surge cualquier duda, Pablo responde en menos de 24 h por WhatsApp.',
+      c:['Hablar por WhatsApp','Reservar llamada gratis']
     },
   ];
 
   var FALLBACK = [
-    'Esa pregunta es mejor que te la responda Pablo directamente. 😊\n¿Te pongo en contacto con él?',
-    'Para esa consulta específica Pablo puede darte una respuesta mucho más precisa. ¿Hablamos? 📞',
-    'No tengo esa información exacta, pero Pablo responde en menos de 24 horas. ¿Le escribimos?',
+    'No estoy seguro de haberte entendido. 😅 Puedo ayudarte con los servicios, precios, plazos o el proceso de trabajo. ¿Sobre qué quieres saber?',
+    'Esa la responde mejor Pablo directamente. 😊 ¿Te pongo en contacto con él, o prefieres que te cuente algo de los servicios o el proceso?',
+    'Para esa consulta concreta Pablo te dará una respuesta más precisa (responde en menos de 24 h). Mientras, ¿quieres ver los servicios o cuánto cuesta?',
   ];
 
   function norm(s){
-    return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w\s]/g,' ');
+    return ' '+s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim()+' ';
   }
 
+  function esc(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+  // Coincidencia por palabra completa (evita que "como" empareje dentro de otra palabra).
+  function hasKey(n, key){
+    var k = norm(key).trim();
+    return new RegExp('(^| )'+esc(k)+'( |$)').test(n.trim());
+  }
+
+  // Puntúa cada intención por nº de keywords que aparecen y elige la mejor.
   function findIntent(txt){
-    var n = norm(txt);
+    var n = norm(txt), best = null, bestScore = 0;
     for(var i=0;i<INTENTS.length;i++){
-      var it=INTENTS[i];
+      var it = INTENTS[i], score = 0;
       for(var j=0;j<it.k.length;j++){
-        if(n.indexOf(norm(it.k[j]))!==-1) return it;
+        if(hasKey(n, it.k[j])) score++;
       }
+      if(score > bestScore){ bestScore = score; best = it; }
     }
-    return null;
+    return best;
   }
 
   function scroll(){ box.scrollTop = box.scrollHeight; }
@@ -1299,42 +1337,19 @@
     return w;
   }
 
-  // Respaldo local (respuestas predefinidas) si la IA no está disponible.
-  function localReply(txt){
-    var intent=findIntent(txt);
-    if(intent){
-      addMsg(intent.r,'bot',intent.c);
-    } else {
-      addMsg(FALLBACK[fbIdx%FALLBACK.length],'bot',['Hablar por WhatsApp','Reservar llamada gratis']);
-      fbIdx++;
-    }
-  }
-
   function respond(txt){
     var tw=showTyping();
-    history.push({role:'user',content:txt});
-    fetch(API,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:history})
-    })
-    .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
-    .then(function(d){
+    var delay=750+Math.random()*650;
+    setTimeout(function(){
       tw.remove();
-      if(d && d.reply){
-        history.push({role:'assistant',content:d.reply});
-        addMsg(d.reply,'bot',['Hablar por WhatsApp','Reservar llamada gratis']);
+      var intent=findIntent(txt);
+      if(intent){
+        addMsg(intent.r,'bot',intent.c);
       } else {
-        history.pop();
-        localReply(txt);
+        addMsg(FALLBACK[fbIdx%FALLBACK.length],'bot',['Ver servicios','¿Cuánto cuesta?','Hablar por WhatsApp']);
+        fbIdx++;
       }
-    })
-    .catch(function(){
-      // Sin backend (p. ej. en GitHub Pages) o error de red → respuestas locales.
-      tw.remove();
-      history.pop();
-      localReply(txt);
-    });
+    },delay);
   }
 
   function onChip(c){
